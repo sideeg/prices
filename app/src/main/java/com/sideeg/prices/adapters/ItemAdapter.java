@@ -63,7 +63,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemsViewHolders> implemen
         if (!listItem.getName().equals("no match found")){
 
             holder.itemName.setText(listItem.getName());
-            //holder.itemPrice.setText(listItem.getPrice());
+            holder.itemPrice.setText(String.valueOf(listItem.getPrice()));
             holder.itemImage.setImageResource(listItem.getImage());
             holder.setItemclickInterface(new ItemclickInterface() {
                 @Override
@@ -71,6 +71,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemsViewHolders> implemen
                     Intent intent = new Intent(view.getContext(), ItemDetialsActivity.class);
                     intent.putExtra("src",itemsListFiltered.get(position).getImage());
                     intent.putExtra("name",itemsListFiltered.get(position).getName());
+                    intent.putExtra("item descr",itemsListFiltered.get(position).getDescroption());
+                    intent.putExtra("itemprice",String.valueOf(itemsListFiltered.get(position).getPrice()));
                     view.getContext().startActivity(intent);
 
 

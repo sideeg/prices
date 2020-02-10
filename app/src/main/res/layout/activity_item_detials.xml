@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/fooddescrition"
+                    android:id="@+id/item_descrition"
                     android:layout_marginTop="12dp"
                     android:lineSpacingMultiplier="1.5"
                     android:padding="12dp"
@@ -109,7 +109,7 @@
                     android:layout_height="match_parent" />
 
                 <TextView
-                    android:id="@+id/foodpricedetails"
+                    android:id="@+id/item_pricedetails"
                     android:layout_marginTop="10dp"
                     android:padding="12dp"
                     android:text="1000"
