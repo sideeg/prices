@@ -30,6 +30,7 @@
             android:text="foodname"
             android:textColor="@android:color/white"
 
+            android:maxLines="1"
             android:textSize="20sp"
             android:gravity="center"
             android:layout_alignParentBottom="true"
@@ -38,14 +39,15 @@
             android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/item_price_text"
-                android:text="price"
+                android:id="@+id/item_data_text"
+                android:text="2/5/2020"
 
                 android:layout_marginLeft="40dp"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:gravity="center"
+                android:maxLines="1"
                 android:layout_alignParentBottom="true"
                 android:layout_weight="5"
                 android:layout_width="0dp"
@@ -54,12 +56,14 @@
             <ImageView
                 android:layout_weight="1"
                 android:layout_width="0dp"
+                android:layout_marginStart="20dp"
                 android:src="@drawable/ic_black_price"
                 android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/item_price"
                 android:layout_marginTop="0dp"
+                android:layout_marginStart="10dp"
                 android:padding="12dp"
                 android:text="1000"
                 android:textColor="@android:color/white"

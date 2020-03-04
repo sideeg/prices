@@ -9,18 +9,27 @@ public class Item {
     private String descroption;
     private int image;
     private int price;
+    private String data;
 
     public Item() {
     }
 
-    public Item(String name, String descroption, int image, int price) {
+    public Item(String name, String descroption, int image, int price,String data) {
         this.name = name;
         this.descroption = descroption;
         this.image = image;
         this.price = price;
+        this.data = data;
     }
 
 
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
 
     public String getName() {
         return name;

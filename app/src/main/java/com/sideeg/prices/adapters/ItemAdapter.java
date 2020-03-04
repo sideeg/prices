@@ -65,6 +65,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemsViewHolders> implemen
             holder.itemName.setText(listItem.getName());
             holder.itemPrice.setText(String.valueOf(listItem.getPrice()));
             holder.itemImage.setImageResource(listItem.getImage());
+            holder.item_data_text.setText(listItem.getData());
             holder.setItemclickInterface(new ItemclickInterface() {
                 @Override
                 public void onclic(View view, int postion, Boolean longClick) {
@@ -73,48 +74,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemsViewHolders> implemen
                     intent.putExtra("name",itemsListFiltered.get(position).getName());
                     intent.putExtra("item descr",itemsListFiltered.get(position).getDescroption());
                     intent.putExtra("itemprice",String.valueOf(itemsListFiltered.get(position).getPrice()));
+                    intent.putExtra("item_date",String.valueOf(itemsListFiltered.get(position).getData()));
                     view.getContext().startActivity(intent);
 
 
                 }
             });
         }
-//     holder.cardView.setOnClickListener(new View.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                Intent intent = new Intent(v.getContext(), ItemDetialsActivity.class);
-//                                                intent.putExtra("image", listItem.getImage());
-//                                                context.startActivity(intent);
-//                                            }
-//                                        });
 
-//        holder.delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                remove(position);
-//            }
-//        });
-
-
-
-
-
-//        holder.cardView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Intent intent = new Intent(context,Product_Detile.class);
-////                intent.putExtra("proudect name",listItem.getData());
-////                intent.putExtra("proudect image",listItem.getSrc());
-////
-////                context.startActivity(intent);
-//
-//                Toast.makeText(context,"1234",Toast.LENGTH_LONG);
-//
-//
-//
-//
-//            }
-//        });
 
         if (position > previousPostion){
 
@@ -182,7 +149,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemsViewHolders> implemen
                 }
 
                 if (itemsListFiltered.size() == 0){
-                    itemsListFiltered.add(new Item("no match found","",R.drawable.not_found,0));
+                    itemsListFiltered.add(new Item("no match found","",R.drawable.not_found,0,""));
                 }
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = itemsListFiltered;

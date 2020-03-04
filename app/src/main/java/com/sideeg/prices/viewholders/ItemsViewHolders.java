@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemsViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView itemName,itemPrice;
+    public TextView itemName,itemPrice,item_data_text;
     public ImageView itemImage;
     public CardView cardView;
     private ItemclickInterface itemclickInterface;
@@ -25,6 +25,7 @@ public class ItemsViewHolders extends RecyclerView.ViewHolder implements View.On
         itemImage = itemView.findViewById(R.id.item_image);
         itemPrice =  itemView.findViewById(R.id.item_price);
         cardView =  itemView.findViewById(R.id.item_card_view);
+        item_data_text =  itemView.findViewById(R.id.item_data_text);
         itemView.setOnClickListener(this);
 
     }
