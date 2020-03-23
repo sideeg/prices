@@ -15,7 +15,7 @@ public class ItemDetialsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detials);
-
+        getSupportActionBar().hide();
         Bundle b = getIntent().getExtras();
         int src = b.getInt("src");
         String name = b.getString("name","item Name");

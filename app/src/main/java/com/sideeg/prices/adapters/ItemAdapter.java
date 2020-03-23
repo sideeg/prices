@@ -17,6 +17,7 @@ import com.sideeg.prices.models.Item;
 import com.sideeg.prices.ui.ItemDetialsActivity;
 import com.sideeg.prices.ui.MainActivity;
 import com.sideeg.prices.viewholders.ItemsViewHolders;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemsViewHolders> implemen
 
             holder.itemName.setText(listItem.getName());
             holder.itemPrice.setText(String.valueOf(listItem.getPrice()));
-            holder.itemImage.setImageResource(listItem.getImage());
+           // holder.itemImage.setImageResource(listItem.getImage());
+            Picasso.get().load(listItem.getImage()).fit().into(holder.itemImage);
             holder.item_data_text.setText(listItem.getData());
             holder.setItemclickInterface(new ItemclickInterface() {
                 @Override
@@ -149,7 +151,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemsViewHolders> implemen
                 }
 
                 if (itemsListFiltered.size() == 0){
-                    itemsListFiltered.add(new Item("no match found","",R.drawable.not_found,0,""));
+                   // itemsListFiltered.add(new Item("no match found","",R.drawable.not_found,0,""));
                 }
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = itemsListFiltered;

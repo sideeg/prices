@@ -14,9 +14,9 @@ public class Categories {
     @SerializedName("name")
     private String name;
     @SerializedName("image")
-    private int Image;
+    private String Image;
 
-    public Categories(String name, int image) {
+    public Categories(String name, String image) {
         this.name = name;
         Image = image;
     }
@@ -40,11 +40,11 @@ public class Categories {
         this.name = name;
     }
 
-    public int getImage() {
+    public String getImage() {
         return Image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         Image = image;
     }
 }

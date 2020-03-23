@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sideeg.prices">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,14 +14,15 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.ItemDetialsActivity"></activity>
         <activity android:name=".ui.ItemActivity" >
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+<!--            <meta-data-->
+<!--                android:name="android.app.searchable"-->
+<!--                android:resource="@xml/searchable" />-->
 
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -7,14 +7,14 @@ package com.sideeg.prices.models;
 public class Item {
     private String name;
     private String descroption;
-    private int image;
+    private String image;
     private int price;
     private String data;
 
     public Item() {
     }
 
-    public Item(String name, String descroption, int image, int price,String data) {
+    public Item(String name, String descroption, String image, int price,String data) {
         this.name = name;
         this.descroption = descroption;
         this.image = image;
@@ -47,11 +47,11 @@ public class Item {
         this.descroption = descroption;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

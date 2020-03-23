@@ -7,13 +7,18 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.sideeg.prices.NetWorkApis.ApiClient;
+import com.sideeg.prices.NetWorkApis.NetWorkApis;
 import com.sideeg.prices.R;
+import com.sideeg.prices.Utility;
 import com.sideeg.prices.adapters.CategoriesAdapter;
 import com.sideeg.prices.models.Categories;
+import com.sideeg.prices.models.CategoriesBaseRespnse;
 import com.sideeg.prices.models.Item;
 
 import java.util.ArrayList;
@@ -22,8 +27,12 @@ import java.util.List;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.sideeg.prices.ui.ItemActivity.restricList;
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,40 +42,77 @@ public class MainActivity extends AppCompatActivity {
     public static CategoriesAdapter adapter;
     public static List<Categories> categoriesList;
     private SearchView searchView;
+    private String TAG = "MainActivity";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         categoriesList = new ArrayList<>();
-        categoriesList.add(new Categories("العملات",R.drawable.omla2));
-        categoriesList.add(new Categories("الفضة",R.drawable.selver1));
-        categoriesList.add(new Categories("الذهب ",R.drawable.gold1));
+//        categoriesList.add(new Categories("العملات",R.drawable.omla2));
+//        categoriesList.add(new Categories("الفضة",R.drawable.selver1));
+//        categoriesList.add(new Categories("الذهب ",R.drawable.gold1));
 
         ///////////////////////////////////////////////////////////////////////////////////////////
         restricList = new ArrayList<>();
-        restricList.add(new Item("gold","die",R.drawable.omla2,1500,""));
-        restricList.add(new Item("test","yaah",R.drawable.omla3,1200,""));
-        restricList.add(new Item( "choclate","yah",R.drawable.omla4,1200,""));
-        restricList.add(new Item("pizaa","sss",R.drawable.omla5,500,""));
-        restricList.add(new Item("البيك","ss",R.drawable.omla6,600,""));
-        restricList.add(new Item("burgar","",R.drawable.omla7,452,""));
-        restricList.add(new Item("humburuger","qwqw",R.drawable.omla8,782,""));
-        restricList.add(new Item("jad","sss",R.drawable.gold1,3698,""));
-        restricList.add(new Item("hoot","asasas",R.drawable.gold3,145,""));
-        restricList.add(new Item("kak","",R.drawable.gold4,258,""));
-        restricList.add(new Item("iccream","",R.drawable.gold5,745,""));
-        restricList.add(new Item("piza","hj",R.drawable.gold6,125,""));
-        restricList.add(new Item("watwe fire","",R.drawable.selver1,785,""));
+//        restricList.add(new Item("gold","die",R.drawable.omla2,1500,""));
+//        restricList.add(new Item("test","yaah",R.drawable.omla3,1200,""));
+//        restricList.add(new Item( "choclate","yah",R.drawable.omla4,1200,""));
+//        restricList.add(new Item("pizaa","sss",R.drawable.omla5,500,""));
+//        restricList.add(new Item("البيك","ss",R.drawable.omla6,600,""));
+//        restricList.add(new Item("burgar","",R.drawable.omla7,452,""));
+//        restricList.add(new Item("humburuger","qwqw",R.drawable.omla8,782,""));
+//        restricList.add(new Item("jad","sss",R.drawable.gold1,3698,""));
+//        restricList.add(new Item("hoot","asasas",R.drawable.gold3,145,""));
+//        restricList.add(new Item("kak","",R.drawable.gold4,258,""));
+//        restricList.add(new Item("iccream","",R.drawable.gold5,745,""));
+//        restricList.add(new Item("piza","hj",R.drawable.gold6,125,""));
+//        restricList.add(new Item("watwe fire","",R.drawable.selver1,785,""));
 
-        adapter = new CategoriesAdapter(categoriesList,this,restricList);
-        //add recycler view
-        recyclerViewMenu = findViewById(R.id.categories_recycler_view);
-        recyclerViewMenu.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerViewMenu.setLayoutManager(layoutManager);
 
-        recyclerViewMenu.setAdapter(adapter);
+        getList();
+    }
+
+    private void getList() {
+
+
+        NetWorkApis api = ApiClient.getClient(ApiClient.BASE_URL).create(NetWorkApis.class);
+        Call<CategoriesBaseRespnse> loginCall = api.getCatogies();
+        loginCall.enqueue(new Callback<CategoriesBaseRespnse>() {
+            @Override
+            public void onResponse(Call<CategoriesBaseRespnse> call, Response<CategoriesBaseRespnse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().isError()) {
+                        Utility.showAlertDialog(getString(R.string.error), response.body().getMessage(), MainActivity.this);
+
+                    } else {
+                        adapter = new CategoriesAdapter(response.body().getData(),MainActivity.this,restricList);
+                        //add recycler view
+                        recyclerViewMenu = findViewById(R.id.categories_recycler_view);
+                        recyclerViewMenu.setHasFixedSize(true);
+                        layoutManager = new LinearLayoutManager(MainActivity.this);
+                        recyclerViewMenu.setLayoutManager(layoutManager);
+
+                        recyclerViewMenu.setAdapter(adapter);
+
+                    }
+                } else {
+                    Log.i(TAG, response.errorBody().toString());
+                    Utility.showAlertDialog(getString(R.string.error), getString(R.string.servererror), MainActivity.this);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CategoriesBaseRespnse> call, Throwable t) {
+                Utility.showAlertDialog(getString(R.string.error), t.getMessage(), MainActivity.this);
+                Utility.printLog(TAG, t.getMessage());
+            }
+        });
+
     }
 
     @Override
@@ -75,62 +121,63 @@ public class MainActivity extends AppCompatActivity {
 
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.action_search)
-                .getActionView();
-        searchView.setSearchableInfo(searchManager
-                .getSearchableInfo(getComponentName()));
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-
-        // listening to search query text change
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // filter recycler view when query submitted
-                adapter.getFilter().filter(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-                // filter recycler view when text is changed
-                adapter.getFilter().filter(query);
-                return false;
-            }
-        });
+//        searchView = (SearchView) menu.findItem(R.id.action_search)
+//                .getActionView();
+//        searchView.setSearchableInfo(searchManager
+//                .getSearchableInfo(getComponentName()));
+//        searchView.setMaxWidth(Integer.MAX_VALUE);
+//
+//        // listening to search query text change
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                // filter recycler view when query submitted
+//                adapter.getFilter().filter(query);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String query) {
+//                // filter recycler view when text is changed
+//                adapter.getFilter().filter(query);
+//                return false;
+//            }
+//        });
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+////        if (id == R.id.action_search) {
+////            return true;
+////        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    @Override
+//    public void onBackPressed() {
+//        // close search view on back button pressed
+//        if (!searchView.isIconified()) {
+//            searchView.setIconified(true);
+//            return;
+//        }
+//        super.onBackPressed();
+//    }
+//
+//    private void whiteNotificationBar(View view) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            int flags = view.getSystemUiVisibility();
+//            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+//            view.setSystemUiVisibility(flags);
+//            getWindow().setStatusBarColor(Color.WHITE);
+//        }
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_search) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        // close search view on back button pressed
-        if (!searchView.isIconified()) {
-            searchView.setIconified(true);
-            return;
-        }
-        super.onBackPressed();
-    }
-
-    private void whiteNotificationBar(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int flags = view.getSystemUiVisibility();
-            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            view.setSystemUiVisibility(flags);
-            getWindow().setStatusBarColor(Color.WHITE);
-        }
     }
 }

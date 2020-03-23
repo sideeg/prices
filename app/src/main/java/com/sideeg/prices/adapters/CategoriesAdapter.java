@@ -19,6 +19,7 @@ import com.sideeg.prices.models.Item;
 import com.sideeg.prices.ui.ItemActivity;
 import com.sideeg.prices.ui.ItemDetialsActivity;
 import com.sideeg.prices.viewholders.CategoriesViewHolder;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,8 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesViewHolder
             holder.restricName.setText(listItem.getName());
             //holder.item_data_text.setText(listItem.getData());
             //holder.lastName.setText(listItem.getDesc());
-            holder.restricImage.setImageResource(listItem.getImage());
+           // holder.restricImage.setImageResource(listItem.getImage());
+            Picasso.get().load(listItem.getImage()).fit().into(holder.restricImage);
             holder.setItemclickInterface(new ItemclickInterface() {
                 @Override
                 public void onclic(View view, int postion, Boolean longClick) {
@@ -82,7 +84,8 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesViewHolder
             final Categories listItem = list.get(position);
             holder.restricName.setText(listItem.getName());
             //holder.lastName.setText(listItem.getDesc());
-            holder.restricImage.setImageResource(listItem.getImage());
+//            holder.restricImage.setImageResource();
+            Picasso.get().load(listItem.getImage()).fit().into(holder.restricImage);
 
             holder.setItemclickInterface(new ItemclickInterface() {
                 @Override
@@ -208,7 +211,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesViewHolder
                 }
 
                 if (itemsListFiltered.size() == 0){
-                    itemsListFiltered.add(new Item("no match found","",R.drawable.not_found,0,""));
+                  //  itemsListFiltered.add(new Item("no match found","",R.drawable.not_found,0,""));
                 }
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = itemsListFiltered;

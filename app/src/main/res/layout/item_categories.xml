@@ -6,22 +6,27 @@
     android:layout_marginTop="5dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    card_view:cardCornerRadius="5dp">
+    card_view:cardCornerRadius="25dp"
+    card_view:cardBackgroundColor="@color/gray"
+    style=" ThemeOverlay.AppCompat.Dark.ActionBar"
+    android:padding="10dp"
+    >
 
     <RelativeLayout
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="220dp"
             android:layout_height="120dp"
             android:id="@+id/categrories_image"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginEnd="20dp"/>
 
         <TextView
             android:layout_marginTop="10dp"
