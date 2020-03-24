@@ -8,14 +8,15 @@ import com.sideeg.prices.models.ItemsBaseRespnse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 public interface NetWorkApis {
 
 
-    @GET("Category")
+    @GET("categories")
     Call<CategoriesBaseRespnse> getCatogies();
 
-    @GET("Item")
-    Call<ItemsBaseRespnse> getItems();
+    @GET()
+    Call<ItemsBaseRespnse> getItems(@Url String url);
 
 }

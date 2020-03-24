@@ -93,6 +93,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesViewHolder
                     Intent intent = new Intent(view.getContext(), ItemActivity.class);
                     intent.putExtra("src",list.get(position).getImage());
                     intent.putExtra("name",list.get(position).getName());
+                    intent.putExtra("id",list.get(position).getId());
                     view.getContext().startActivity(intent);
 
 

@@ -42,6 +42,7 @@ public class ItemActivity extends AppCompatActivity {
     public static List<Item> restricList;
     private SearchView searchView;
     private String TAG = "ItemActivity";
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +50,9 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item);
         getSupportActionBar().hide();
         Bundle b = getIntent().getExtras();
-        int src = b.getInt("src");
-        String name = b.getString("name","categories Name");
+       // int src = b.getInt("src");
+       // String name = b.getString("name","categories Name");
+        id = b.getString("id","0");
 
 //        ImageView foodimage= findViewById(R.id.image_categoreis_diteals);
 //        foodimage.setImageResource(src);
@@ -81,7 +83,7 @@ public class ItemActivity extends AppCompatActivity {
 
 
         NetWorkApis api = ApiClient.getClient(ApiClient.BASE_URL).create(NetWorkApis.class);
-        Call<ItemsBaseRespnse> loginCall = api.getItems();
+        Call<ItemsBaseRespnse> loginCall = api.getItems("categories/"+id+"/items");
         loginCall.enqueue(new Callback<ItemsBaseRespnse>() {
             @Override
             public void onResponse(Call<ItemsBaseRespnse> call, Response<ItemsBaseRespnse> response) {

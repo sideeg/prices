@@ -1,14 +1,28 @@
 package com.sideeg.prices.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by sideeg on 1/12/2019.
  */
 
 public class Item {
+    @SerializedName("name")
     private String name;
+
+    @SerializedName("id")
     private String descroption;
+
+    @SerializedName("image")
     private String image;
+
+    @SerializedName("id")
+    private String id;
+
+    @SerializedName("price")
     private int price;
+
+    @SerializedName("date")
     private String data;
 
     public Item() {
